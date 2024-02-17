@@ -1,0 +1,144 @@
+.head-line {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+}
+
+.head-line svg {
+    width: 430px;
+}
+
+.menus {
+    margin-top: 1em;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 4px double #000;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+
+.menus button {
+    border: none;
+    background: none;
+    margin: 5px;
+}
+
+.menus button:hover {
+    background-color: ivory;
+}
+
+.news-image-size {
+    max-width: 100%;
+    max-height: 250px;
+}
+
+.news {
+    border-bottom: 1px solid black;
+    padding: 2.5em;
+
+}
+
+.icon {
+    margin-top: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 50px;
+}
+
+.icon .btn {
+    padding: 0;
+    /* 버튼 내부 패딩 제거 */
+    margin-right: 10px;
+    /* find 아이콘과의 간격 조정 */
+}
+
+.icon i {
+    margin: 5px;
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+.icon .btn {
+    display: none;
+    /* 기본적으로 햄버거 버튼 숨김 */
+    padding: 0;
+    margin-right: 10px;
+}
+
+
+@media (max-width: 768px) {
+    .menus {
+        display: none;
+        /* 모바일 환경에서 메뉴 숨기기 */
+    }
+
+    .hide {
+        display: block;
+        /* 모바일 환경에서 햄버거 메뉴 버튼 보이기 */
+    }
+
+    .offcanvas .menus {
+        display: flex;
+        flex-direction: column;
+        /* 세로 배치 */
+        justify-content: center;
+        /* 중앙 정렬 */
+        align-items: start;
+        /* 시작점(왼쪽) 정렬 */
+        margin-top: 1em;
+        padding-top: 2px;
+        padding-bottom: 2px;
+    }
+
+    .offcanvas .menus button {
+        margin: 5px 0;
+        /* 상하 마진 조정, 좌우 마진 제거 또는 조정 */
+    }
+
+    .icon .btn {
+        display: inline-block;
+        /* 모바일 환경에서 햄버거 버튼 보이기 */
+    }
+}
+
+#offcanvasMenu {
+    width: 220px;
+    /* 원하는 너비로 조정 */
+}
+
+.menu-icon {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    background-image: url(./images/menu.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.find-icon {
+    /* display: inline-block; */
+    display: block;
+    width: 32px;
+    height: 32px;
+    background-image: url(./images/find.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.search-input {
+    display: none;
+    max-width: 200px; /* 인풋창의 최대 너비 조정 */
+}
+
+#button-addon2 {
+    display: none;
+    min-width: 10px;
+    padding: 0.375rem 0.75rem;
+}
