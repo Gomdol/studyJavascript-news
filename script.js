@@ -49,18 +49,6 @@ const render = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 function openSearch() {
   // 인풋창과 버튼 요소를 변수에 할당
   let searchInput = document.querySelector('.search-input');
