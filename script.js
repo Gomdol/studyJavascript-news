@@ -4,28 +4,33 @@ menus.forEach((menu) =>
   menu.addEventListener("click", (event) => getNewsByCategory(event)));
 
 const getLatestNews = async () => {
-  const url = new URL(
-    `https://pooh-news.netlify.app/top-headlines?country=kr`
-  );
+  const url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr`);
   const response = await fetch(url);
   const data = await response.json();
   newsList = data.articles;
   render();
-  console.log("news:", newsList);
 };
+getLatestNews();
 
 const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
-  console.log("category:",category)
+
   const url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr&category=${category}`)
   const response = await fetch(url)
   const data = await response.json()
-  console.log("DDD :", data)
   newsList = data.articles;
   render();
 }
 
-getLatestNews();
+const getNewsByKeyword = async (event) => {
+  const keyword = document.getElementById("search-input").value;
+
+  const url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr&q=${keyword}`)
+  const response = await fetch(url)
+  const data = await response.json()
+  newsList = data.articles;
+  render();
+}
 
 const render = () => {
   const newsHTML = newsList.map(news => `<article class="row news">
