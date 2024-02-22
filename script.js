@@ -3,33 +3,43 @@ const menus = document.querySelectorAll(".menus button")
 menus.forEach((menu) =>
   menu.addEventListener("click", (event) => getNewsByCategory(event)));
 
+let url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr`);
+
+const getNews = async () => {
+
+  try {
+    const response = await fetch(url)
+    const data = await response.json()
+    if (response.status === 200) {
+      if (data.articles.length === 0) {
+        throw new Error("검색 결과가 없습니다.");
+      }
+      newsList = data.articles;
+      render();
+    } else {
+      throw new Error(data.message)
+    }
+  } catch (error) {
+    errorRender(error.message)
+  }
+}
+
 const getLatestNews = async () => {
-  const url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr`);
-  const response = await fetch(url);
-  const data = await response.json();
-  newsList = data.articles;
-  render();
+  url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr`);
+  getNews();
 };
 getLatestNews();
 
 const getNewsByCategory = async (event) => {
   const category = event.target.textContent.toLowerCase();
-
-  const url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr&category=${category}`)
-  const response = await fetch(url)
-  const data = await response.json()
-  newsList = data.articles;
-  render();
+  url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr&category=${category}`)
+  getNews();
 }
 
 const getNewsByKeyword = async (event) => {
   const keyword = document.getElementById("search-input").value;
-
-  const url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr&q=${keyword}`)
-  const response = await fetch(url)
-  const data = await response.json()
-  newsList = data.articles;
-  render();
+  url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr&q=${keyword}`)
+  getNews();
 }
 
 const render = () => {
@@ -47,12 +57,16 @@ const render = () => {
     </div>
   </article>`).join('');
 
-
-
   document.getElementById("news-board").innerHTML = newsHTML;
 }
 
+const errorRender = (errorMessage) => {
+  const errorHTML = `<div class="alert alert-danger" role="alert">
+  ${errorMessage}
+  </div>`
 
+  document.getElementById("news-board").innerHTML = errorHTML;
+}
 
 function openSearch() {
   // 인풋창과 버튼 요소를 변수에 할당
