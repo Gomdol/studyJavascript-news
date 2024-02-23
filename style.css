@@ -74,6 +74,10 @@
 
 
 @media (max-width: 768px) {
+    h2 {
+        margin-top: 20px; /* 타이틀과 디스크립션 사이의 마진을 20px로 설정 */
+    }
+
     .menus {
         display: none;
         /* 모바일 환경에서 메뉴 숨기기 */
