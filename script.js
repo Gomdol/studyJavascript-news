@@ -3,12 +3,15 @@ const menus = document.querySelectorAll(".menus button")
 menus.forEach((menu) =>
   menu.addEventListener("click", (event) => getNewsByCategory(event)));
 
+const logo = document.querySelector('.head-line')
+logo.addEventListener('click', () => {window.location.reload();});
+
 let url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr`);
 
 let totalResults = 0
 let page = 1
 const pageSize = 10
-const groupSize = 5
+let groupSize = 5
 
 const getNews = async () => {
 
@@ -51,8 +54,14 @@ const getNewsByCategory = async (event) => {
 const getNewsByKeyword = async (event) => {
   const keyword = document.getElementById("search-input").value;
   url = new URL(`https://pooh-news.netlify.app/top-headlines?country=kr&q=${keyword}`)
+  moveToPage(1);
   getNews();
 }
+document.getElementById('search-input').addEventListener('keypress', function(event) {
+  if (event.key === 'Enter') { 
+    getNewsByKeyword(); 
+  }
+});
 
 const render = () => {
   const newsHTML = newsList.map(news => `<article class="row news">
@@ -96,26 +105,30 @@ function openSearch() {
 }
 
 const paginationRender = () => {
-  //totalResult
-  //page
-  //pageSize
-  //groupSize
-  //totalPages
-  const totalPages = Math.ceil(totalResults / pageSize)
-  //pageGroup 몇 번째 페이지 그룹에 속해있는지?
-  const pageGroup = Math.ceil(page / groupSize) 
-  //lastPage 그 그룹의 마지막 페이지 번호
-  let lastPage = pageGroup * groupSize
+  //totalResult 총 기사의 수
+  //page 내 현재 페이지
+  //pageSize 한 화면에서 불러올 총 페이지 수
+  //groupSize 한 번에 불러올 페이지 그룹 사이즈  
+  const totalPages = Math.ceil(totalResults / pageSize) //totalPages 총 페이지 수  
+  const pageGroup = Math.ceil(page / groupSize)  //pageGroup 몇 번째 페이지 그룹에 속해있는지?
+  let lastPage = pageGroup * groupSize   //lastPage 그 그룹의 마지막 페이지 번호
   if(lastPage>totalPages){
     lastPage = totalPages
   }
-  //firstPage 그 그룹의 첫번째 페이지 번호
-  const firstPage = lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);
+  let firstPage = lastPage - (groupSize - 1) <= 0 ? 1 : lastPage - (groupSize - 1);   //firstPage 그 그룹의 첫번째 페이지 번호
 
   let paginationHTML = ``
 
+  if(firstPage != 1){
+    paginationHTML = `<li class="page-item" onclick="moveToPage(${1})"><a class="page-link" href="#"><<</a></li><li class="page-item" onclick="moveToPage(${page - 1})"><a class="page-link" href="#"><</a></li>`
+  }
+
   for(let i=firstPage;i<=lastPage;i++){
-    paginationHTML+=`<li class="page-item ${i === page?"active":""}" onclick="moveToPage(${i})"><a class="page-link" >${i}</a></li>`
+    paginationHTML+=`<li class="page-item ${i === page?"active":""}" onclick="moveToPage(${i})"><a class="page-link" href="#">${i}</a></li>`
+  }
+
+  if(lastPage != totalPages){
+    paginationHTML += `<li class="page-item" onclick="moveToPage(${page + 1})"><a class="page-link" href="#">></a></li><li class="page-item" onclick="moveToPage(${totalPages})"><a class="page-link" href="#">>></a></li>`
   }
 
   document.querySelector(".pagination").innerHTML=paginationHTML
@@ -126,3 +139,4 @@ const moveToPage = (pageNum) =>{
   page = pageNum
   getNews();
 }
+

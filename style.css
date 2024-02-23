@@ -142,3 +142,22 @@
     min-width: 10px;
     padding: 0.375rem 0.75rem;
 }
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    margin: 1em;
+}
+.pagination li a{
+    background-color: white;
+    border-color: lightgray;
+    color: burlywood;
+}
+.pagination li.active a {
+    background-color: burlywood;
+    border-color: lightgray;
+    color: white;
+}
+.head-line {
+    cursor: pointer;
+}
